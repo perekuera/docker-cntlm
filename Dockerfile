@@ -12,4 +12,8 @@ RUN apk add --no-cache --virtual .build-deps gcc make musl-dev \
     && rm -Rf /usr/local/src/cntlm-0.92.3 \
     && apk del --no-cache .build-deps
 
+ADD ./source/setup.sh /usr/local/src
+
 EXPOSE 3128
+
+CMD /usr/local/src/setup.sh
