@@ -16,4 +16,4 @@ ADD ./source/setup.sh /usr/local/src
 
 EXPOSE 3128
 
-CMD /usr/local/src/setup.sh
+CMD sh /usr/local/src/setup.sh

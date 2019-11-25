@@ -65,8 +65,6 @@ echo ""
 read -p 'Proxy url: ' urlval
 read -p 'Proxy port: ' portval
 read -p 'No proxy (default localhost, 127.0.0.*, 10.*, 192.168.*): ' noproxyval
-echo "User $userval has $userpass password"
-
 
 # Start cntlm after all configuration has been written.
 #/usr/sbin/cntlm -c /etc/cntlm.conf -f ${OPTIONS}
