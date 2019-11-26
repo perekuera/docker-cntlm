@@ -1,6 +1,8 @@
 #!/bin/sh
 
-set -e
+#set -e
+
+cat /etc/cntlm.conf
 
 read -p 'User: ' userval
 read -p 'Domain: ' domainval
@@ -16,10 +18,13 @@ echo "go go go !!!"
 #echo "Passwords:"
 #echo $passwdval
 
-echo "Password $passwdval" > /etc/cntlm.conf
+echo "Password ${passwdval}" > /etc/cntlm.conf
+echo "Password ${passwdval}" > /etc/cntlm2.conf
 
-echo ##################
-cat /etc/cntlm.conf
-echo ##################
+echo "##################" > out
+cat /etc/cntlm.conf > out
+echo "##################" > out
+cat /etc/cntlm2.conf > out
+echo "##################" > out
 
-#/usr/sbin/cntlm -H -u $userval -d $domainval
+/usr/sbin/cntlm -H -u $userval -d $domainval > out
