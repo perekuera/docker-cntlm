@@ -66,8 +66,14 @@ read -p 'Proxy url: ' urlval
 read -p 'Proxy port: ' portval
 read -p 'No proxy (default localhost, 127.0.0.*, 10.*, 192.168.*): ' noproxyval
 
+cntlmpassval=echo $passwdval | cntlm -f -H -u $userval@$domainval
+
+echo "Passwords:"
+echo $cntlmpassval
+
 # Start cntlm after all configuration has been written.
 #/usr/sbin/cntlm -c /etc/cntlm.conf -f ${OPTIONS}
 
 # Start cNTLM in foreground (debian)
 #cntlm -f -g -c /etc/cntlm.conf
+
