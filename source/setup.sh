@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
@@ -10,7 +10,7 @@ set -e
 # fi
 
 # Check if any of the password args was passed
-# CNTLM_PASSWORDS=($CNTLM_PASSLM $CNTLM_PASSNT $CNTLM_PASSNTLMv2)
+# CNTLM_PASSWORDS=($CNT LM_PASSLM $CNTLM_PASSNT $CNTLM_PASSNTLMv2)
 # if [ ${#CNTLM_PASSWORDS[@]} -eq 0 ]
 # then
 #     echo "Either CNTLM_PASSLM or CNTLM_PASSNT or CNTLM_PASSNTLMv2 must be passed!" >> /dev/stderr
@@ -58,18 +58,7 @@ set -e
 ### URL https://github.com/robertdebock/docker-cntlm
 ### URL https://github.com/jaschac/docker-cntlm
 
-read -p 'User: ' userval
-read -p 'Domain: ' domainval
-read -sp 'Password: ' passwdval
-echo ""
-read -p 'Proxy url: ' urlval
-read -p 'Proxy port: ' portval
-read -p 'No proxy (default localhost, 127.0.0.*, 10.*, 192.168.*): ' noproxyval
 
-cntlmpassval=echo $passwdval | cntlm -f -H -u $userval@$domainval
-
-echo "Passwords:"
-echo $cntlmpassval
 
 # Start cntlm after all configuration has been written.
 #/usr/sbin/cntlm -c /etc/cntlm.conf -f ${OPTIONS}
@@ -77,3 +66,4 @@ echo $cntlmpassval
 # Start cNTLM in foreground (debian)
 #cntlm -f -g -c /etc/cntlm.conf
 
+#/usr/sbin/cntlm -f -c /etc/cntlm.conf 

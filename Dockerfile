@@ -13,6 +13,8 @@ RUN apk add --no-cache --virtual .build-deps gcc make musl-dev \
     && apk del --no-cache .build-deps
 
 ADD ./source/setup.sh /usr/local/src
+ADD ./source/config.sh /usr/local/src
+ADD ./source/test.sh /usr/local/src
 
 EXPOSE 3128
 
