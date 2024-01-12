@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+    cntlm:
+        container_name: cntlm
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                - USERNAME=empty
+                - DOMAIN=empty
+                - PASSNTLMV2=empty
+                - PROXY=empty
+        image: cntlm:v1.0
+        ports:
+            - 3128:3128
