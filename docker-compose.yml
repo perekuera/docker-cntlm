@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 
 services:
     cntlm:
@@ -9,8 +9,8 @@ services:
             args:
                 - USERNAME=empty
                 - DOMAIN=empty
-                - PASSNTLMV2=empty
-                - PROXY=empty
+                - PASSWORD=empty
+                - PROXIES=empty
         image: cntlm:v1.0
         ports:
             - 3128:3128

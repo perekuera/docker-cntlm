@@ -6,24 +6,23 @@ LABEL version="1.0" \
 
 ARG USERNAME
 ARG DOMAIN
-ARG PASSNTLMV2
-ARG PROXY
+ARG PASSWORD
+ARG PROXIES
 
-COPY ./cntlm-0.92.3/ /usr/local/src/cntlm-0.92.3/
-#COPY ./source/ /usr/local/src/
+WORKDIR /usr/local/src
 
+COPY ./cntlm-0.92.3 .
+COPY ./source .
 
 RUN apk add --no-cache --virtual .build-deps gcc make musl-dev \
-    && cd /usr/local/src/cntlm-0.92.3 && ./configure && make && make install \
-    && rm -Rf /usr/local/src/cntlm-0.92.3 \
+    && cd ./cntlm-0.92.3 && ./configure && make && make install \
+    && rm -Rf ./cntlm-0.92.3 \
     && apk del --no-cache .build-deps \
     && rm -rf /var/cache/apk/*
+    && ./setup.sh
 
 # ADD ./source/setup.sh /usr/local/src
-# ADD ./source/config.sh /usr/local/src
-# ADD ./source/test.sh /usr/local/src
-# ADD ./source/* /usr/local/src
 
 EXPOSE 3128
 
-CMD sh /usr/local/src/setup.sh
+#ENTRYPOINT ["sh", "./setup.sh"]
