@@ -2,6 +2,31 @@
 
 set -e
 
+cntlm_res=$(cntlm -u $USERNAME -d $DOMAIN -H)
+
+hash_ntlmv2=$(echo "$cntlm_res" | awk '/PassNTLMv2/ {print $2}')
+
+noproxy="localhost, 127.0.0.*, 10.*, 192.168.*, *.$2"
+if [ -n "$NOPROXY" ]; then
+	noproxy="$noproxy, $NOPROXY"
+fi
+
+cat << EOF > /etc/cntlm.conf
+UserName $USERNAME
+Domain $DOMAIN
+PassNTLMv2 $hash_ntlmv2
+Proxy $PROXY
+NoProxy $noproxy
+Gateway yes
+Listen 3128
+EOF
+
+# cat << EOF > /etc/cntlm.conf
+# UserName $USERNAME
+# Domain $DOMAIN
+# Password $PASSWORD
+# EOF
+
 # Check if mandatory args were passed
 # if [[ -z $CNTLM_USERNAME || -z $CNTLM_DOMAIN || -z $CNTLM_PROXY_URL ]]
 # then
@@ -28,7 +53,7 @@ set -e
 # then
 #     sed -i 's/<CNTLM_USERNAME>/'${CNTLM_USERNAME}/g /etc/cntlm.conf
 #     sed -i 's/<CNTLM_DOMAIN>/'${CNTLM_DOMAIN}/g /etc/cntlm.conf
-#     sed -i 's/<CNTLM_PASSLM>/'${CNTLM_PASSLM}/g /etc/cntlm.conf 
+#     sed -i 's/<CNTLM_PASSLM>/'${CNTLM_PASSLM}/g /etc/cntlm.conf
 #     sed -i 's/<CNTLM_PASSNT>/'${CNTLM_PASSNT}/g /etc/cntlm.conf
 #     sed -i 's/<CNTLM_PASSNTLMv2>/'${CNTLM_PASSNTLMv2}/g /etc/cntlm.conf
 #     sed -i 's/<CNTLM_PROXY_URL>/'${CNTLM_PROXY_URL}/g /etc/cntlm.conf
@@ -66,4 +91,4 @@ set -e
 # Start cNTLM in foreground (debian)
 #cntlm -f -g -c /etc/cntlm.conf
 
-#/usr/sbin/cntlm -f -c /etc/cntlm.conf 
+#/usr/sbin/cntlm -f -c /etc/cntlm.conf

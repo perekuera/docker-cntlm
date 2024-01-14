@@ -7,10 +7,11 @@ services:
             context: .
             dockerfile: Dockerfile
             args:
-                - USERNAME=empty
-                - DOMAIN=empty
-                - PASSWORD=empty
-                - PROXIES=empty
+                - USERNAME="testuser"
+                - DOMAIN="corp-uk"
+                - PASSWORD="password"
+                - PROXY="10.0.0.41:8080"
+                - NOPROXY=""
         image: cntlm:v1.0
         ports:
             - 3128:3128

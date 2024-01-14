@@ -7,22 +7,22 @@ LABEL version="1.0" \
 ENV USERNAME
 ENV DOMAIN
 ENV PASSWORD
-ENV PROXIES
+ENV PROXY
+ENV NOPROXY
 
 WORKDIR /usr/local/src
 
-COPY ./cntlm-0.92.3 .
-COPY ./source .
+COPY ./cntlm-0.92.3 /usr/local/src
+COPY ./source/*.sh .
 
 RUN apk add --no-cache --virtual .build-deps gcc make musl-dev \
-    && cd ./cntlm-0.92.3 && ./configure && make && make install \
+    && cd /usr/local/src/cntlm-0.92.3 && ./configure && make && make install \
     && rm -Rf ./cntlm-0.92.3 \
     && apk del --no-cache .build-deps \
-    && rm -rf /var/cache/apk/*
-    && ./setup.sh
-
-# ADD ./source/setup.sh /usr/local/src
+    && rm -rf /var/cache/apk/* \
+    && chmod +x ./build.sh \
+    && ./build.sh
 
 EXPOSE 3128
 
-#ENTRYPOINT ["sh", "./setup.sh"]
+ENTRYPOINT ["sh", "./init.sh"]
