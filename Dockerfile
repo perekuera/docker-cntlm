@@ -4,10 +4,10 @@ LABEL version="1.0" \
       description="CNTLM Docker image for handling NTLM authentication" \
       maintainer="Pere Bestard"
 
-ARG USERNAME
-ARG DOMAIN
-ARG PASSWORD
-ARG PROXIES
+ENV USERNAME
+ENV DOMAIN
+ENV PASSWORD
+ENV PROXIES
 
 WORKDIR /usr/local/src
 
