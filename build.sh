@@ -19,21 +19,22 @@ while true; do
     fi;
 done;
 
-read proxy -ep "Enter proxy (address:port): " proxy;
+read -ep "Enter proxy (address:port): " proxy;
 
 echo "Username is $username";
 echo "Domain is $domain";
 echo "Password is $(echo "$password" | tr -c '\n' '*')";
 echo "Proxy is $proxy";
+echo "Additional no proxy (default localhost, 127.0.0.*, 10.*, 192.168.*): " $noproxy;
 
 echo "Building..."
 
-docker compose \
-    --build-args USERNAME="$username" \
-    --build-args DOMAIN="$domain" \
-    --build-args PASSWORD="$password" \
-    --build-args PROXY="$proxy" \
-    build;
+docker compose build \
+    --build-arg USERNAME="$username" \
+    --build-arg DOMAIN="$domain" \
+    --build-arg PASSWORD="$password" \
+    --build-arg PROXY="$proxy" \
+    --build-arg NOPROXY="$noproxy";
 
 if [ "$?" -ne 0 ]; then
     echo "Error building image";

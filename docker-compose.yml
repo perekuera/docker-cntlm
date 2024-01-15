@@ -13,5 +13,6 @@ services:
                 - PROXY="10.0.0.41:8080"
                 - NOPROXY=""
         image: cntlm:v1.0
+        restart: always
         ports:
             - 3128:3128
