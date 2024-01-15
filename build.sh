@@ -19,20 +19,20 @@ while true; do
     fi;
 done;
 
-read -a proxy_list -p "Enter proxies (space-separated): ";
+read proxy -ep "Enter proxy (address:port): " proxy;
 
 echo "Username is $username";
 echo "Domain is $domain";
 echo "Password is $(echo "$password" | tr -c '\n' '*')";
-echo "Proxy list is ${proxy_list[@]}";
+echo "Proxy is $proxy";
 
 echo "Building..."
 
 docker compose \
-    --build-arg USERNAME="$username" \
-    --build-arg DOMAIN="$domain" \
-    --build-arg PASSWORD="$password" \
-    --build-arg PROXIES="${proxy_list[@]}" \
+    --build-args USERNAME="$username" \
+    --build-args DOMAIN="$domain" \
+    --build-args PASSWORD="$password" \
+    --build-args PROXY="$proxy" \
     build;
 
 if [ "$?" -ne 0 ]; then
