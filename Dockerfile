@@ -10,19 +10,18 @@ ENV PASSWORD
 ENV PROXY
 ENV NOPROXY
 
-WORKDIR /usr/local/src
+WORKDIR /etc/cntlm
 
-COPY ./cntlm-0.92.3 /usr/local/src
-COPY ./source/*.sh .
+COPY ./src/* /usr/local/src
 
 RUN apk add --no-cache --virtual .build-deps gcc make musl-dev \
     && cd /usr/local/src/cntlm-0.92.3 && ./configure && make && make install \
-    && rm -Rf ./cntlm-0.92.3 \
+    && rm -Rf /usr/local/src/cntlm-0.92.3 \
     && apk del --no-cache .build-deps \
     && rm -rf /var/cache/apk/* \
-    && chmod +x ./build.sh \
-    && ./build.sh
+    && chmod +x /usr/local/src/config.sh \
+    && /usr/local/src/config.sh
 
 EXPOSE 3128
 
-ENTRYPOINT ["sh", "./init.sh"]
+ENTRYPOINT cntlm -f -c /etc/cntlm/cntlm.conf
